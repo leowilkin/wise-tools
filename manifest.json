@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Wise Tools",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A collection of tools to modify & enhance Wise (wise.com) for faster use at HCB Operations.",
   "author": "Leo",
   "homepage_url": "https://github.com/leowilkin/wise-tools",
