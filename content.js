@@ -12,7 +12,6 @@
             if (hrefMatch && hrefMatch[1]) {
                 return hrefMatch[1];
             }
-            // Also try to match test IDs (with different format)
             const testMatch = sendButton.href.match(/contact=([a-zA-Z0-9-]+)/);
             if (testMatch && testMatch[1]) {
                 return testMatch[1];
@@ -37,13 +36,11 @@
         return null;
     }
 
-    // Function to copy text to clipboard
     async function copyToClipboard(text) {
         try {
             await navigator.clipboard.writeText(text);
             return true;
         } catch (err) {
-            // Fallback for older browsers
             const textArea = document.createElement('textarea');
             textArea.value = text;
             textArea.style.position = 'fixed';
@@ -124,11 +121,71 @@
         console.log('Copy ID button added successfully for contact:', contactId);
     }
 
+    function addSearchByIdButton() {
+        if (!window.location.href.includes('/recipients') || window.location.href.includes('/recipients/')) {
+            return;
+        }
+
+        const addRecipientButton = document.querySelector('button.Dashboard_addContact__khCen');
+        if (!addRecipientButton) {
+            console.log('Add recipient button not found');
+            return;
+        }
+
+        if (document.querySelector('.wise-search-by-id-btn')) {
+            return;
+        }
+
+        const searchByIdButton = document.createElement('button');
+        searchByIdButton.className = 'btn btn-md np-btn np-btn-md btn-accent btn-priority-2 m-l-1 wise-search-by-id-btn';
+        searchByIdButton.textContent = 'Search by ID';
+        searchByIdButton.setAttribute('aria-disabled', 'false');
+        searchByIdButton.setAttribute('type', 'button');
+        searchByIdButton.setAttribute('aria-live', 'off');
+        searchByIdButton.setAttribute('aria-busy', 'false');
+        searchByIdButton.setAttribute('title', 'Search for a recipient by their ID');
+        searchByIdButton.setAttribute('data-extension', 'wise-search-by-id');
+        searchByIdButton.style.cursor = 'pointer';
+
+        searchByIdButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const searchInput = document.querySelector('.SearchInput_tw-contact-search input[type="search"]');
+            if (!searchInput || !searchInput.value.trim()) {
+                alert('Please enter a recipient ID in the search field first');
+                if (searchInput) {
+                    searchInput.focus();
+                }
+                return;
+            }
+
+            const recipientId = searchInput.value.trim();
+            
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+            if (!uuidRegex.test(recipientId)) {
+                alert('Please enter a valid recipient ID (UUID format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)');
+                searchInput.focus();
+                return;
+            }
+
+            const recipientUrl = `https://wise.com/recipients/${recipientId}`;
+            window.location.href = recipientUrl;
+        });
+
+        addRecipientButton.parentElement.insertBefore(searchByIdButton, addRecipientButton.nextSibling);
+
+        console.log('Search by ID button added successfully');
+    }
+
     function init() {
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', addCopyIdButton);
+            document.addEventListener('DOMContentLoaded', function() {
+                addCopyIdButton();
+                addSearchByIdButton();
+            });
         } else {
             addCopyIdButton();
+            addSearchByIdButton();
         }
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
@@ -137,6 +194,13 @@
                         document.querySelector('a[href*="send"][href*="contact="]') && 
                         !document.querySelector('.wise-copy-id-btn')) {
                         setTimeout(addCopyIdButton, 500);
+                    }
+                    
+                    if (window.location.href.includes('/recipients') && 
+                        !window.location.href.includes('/recipients/') &&
+                        document.querySelector('button.Dashboard_addContact__khCen') &&
+                        !document.querySelector('.wise-search-by-id-btn')) {
+                        setTimeout(addSearchByIdButton, 500);
                     }
                 }
             });

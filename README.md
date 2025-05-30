@@ -1,8 +1,13 @@
-# Copy a Wise ID
+# Wise Tools
 
-A Firefox browser extension that adds a "Copy ID" button to Wise recipient pages for easy copying of recipient IDs.
+A collection of tools to modify and enhance Wise (wise.com) for faster use at HCB Operations.
 
-<img src="/assets/demo.png">
+Current tools include:
+
+- Copying a Recipient ID from the Recipient page
+- Searching for a recipient by ID from the Recipients page
+
+<img alt="screenshot of Wise dashboard with copy ID feature" src="/assets/demo.png">
 
 ## Installation
 
@@ -10,9 +15,18 @@ The latest version will be published to Mozilla Firefox Addons [here](https://ad
 
 ## How to Use
 
+### Copy Recipient ID
+
 1. **Open a recipient page:** Click on any recipient to view their details on wise.com
 2. **Find the Copy ID button:** Look for the orange "Copy ID" button in between the to the Send and Delete buttons
 3. **Copy the ID:** Click the button to copy the recipient ID to your clipboard
+
+### Search by Recipient ID
+
+1. **Open the Recipients page:** Go to https://wise.com/recipients
+2. **Enter recipient ID:** Type or paste a recipient ID into the search field
+3. **Click Search by ID:** Click the "Search by ID" button next to the "Add recipient" button
+4. **Navigate to recipient:** The page will redirect you directly to that recipient's page
 
 ## Contributing
 
