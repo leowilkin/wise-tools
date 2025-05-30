@@ -6,7 +6,7 @@ A Firefox browser extension that adds a "Copy ID" button to Wise recipient pages
 
 ## Installation
 
-Just waiting for Mozilla to sign this package, but in the meantime, download a ZIP of this repo, and load it into your Firefox [here](about:debugging#/runtime/this-firefox). Have fun!
+The latest version will be published to Mozilla Firefox Addons [here](https://addons.mozilla.org/en-GB/firefox/addon/wise-tools/).
 
 ## How to Use
 
