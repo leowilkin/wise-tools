@@ -13,6 +13,8 @@ Current tools include:
 
 The latest version will be published to Mozilla Firefox Addons [here](https://addons.mozilla.org/en-GB/firefox/addon/wise-tools/).
 
+Alternatively, download rhe binary from Releases, and install via about:addons.
+
 ## How to Use
 
 ### Copy Recipient ID
