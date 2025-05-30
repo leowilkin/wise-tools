@@ -4,7 +4,7 @@
     },
     "version": {
         "license": "MIT",
-        "version": "1.0.3"
+        "version": "1.1.0"
     },
     "description": {
         "en-US": "A collection of tools to modify and enhance Wise (wise.com) for faster use at HCB Operations."
