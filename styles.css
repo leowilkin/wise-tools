@@ -1,0 +1,33 @@
+.wise-copy-id-btn {
+    background-color: #f9f4de !important;
+    border-color: #ff8c37 !important;
+    border-style: dashed !important;
+    color: black !important;
+    text-decoration: none !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.wise-copy-id-btn:hover {
+    background-color: #f9f4de !important;
+    border-color: #ff8c37 !important;
+}
+
+.wise-copy-id-btn:focus {
+    box-shadow: 0 0 0 2px #ff8c37 !important;
+}
+
+.wise-copy-id-btn:active {
+    background-color: #f9f4de !important;
+    border-color: #ff8c37 !important;
+    border-style: dashed !important;
+}
+
+/*.wise-copy-id-btn.success {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+.wise-copy-id-btn.error {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+} */

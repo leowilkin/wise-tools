@@ -1,0 +1,35 @@
+# Copy a Wise ID
+
+A Firefox browser extension that adds a "Copy ID" button to Wise recipient pages for easy copying of recipient IDs.
+
+<img src="assets/demo.png">
+
+## Installation
+
+Just waiting for Mozilla to sign this package, but in the meantime, download a ZIP of this repo, and load it into your Firefox [here](about:debugging#/runtime/this-firefox). Have fun!
+
+## How to Use
+
+1. **Open a recipient page:** Click on any recipient to view their details on wise.com
+2. **Find the Copy ID button:** Look for the orange "Copy ID" button in between the to the Send and Delete buttons
+3. **Copy the ID:** Click the button to copy the recipient ID to your clipboard
+
+## Contributing
+
+Find something that looks awesome and could be automated via extensions? PR it! I might find a way to do multi-modality for features, so you can toggle your faves and banish the ones that aren't useful. Might happen, might not.
+
+## Technical Deets
+
+Will only run on:
+
+- active tab, AND only on:
+- `*://wise.com/recipients/*` - To run on Wise recipient pages
+- `*://*.wise.com/recipients/*` - To run on all Wise subdomains
+
+Grabs ID from the Send button next to it which has the ID within it. If it doesn't find it there, it has a sneak around `NEXT_PUBLIC`.
+
+## Security
+
+This extension doesn't do anything with the ID, apart from copy it to clipboard. No network calls are made. Your sh\*t is your sh\*t, seriously.
+
+Somehow find a vulnerability? You're either bugging, or something's gone really _really_ wrong! Drop an issue, or send me an email at leo [at] wilkin [dot] xyz.
