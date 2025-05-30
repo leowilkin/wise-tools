@@ -2,7 +2,7 @@
 
 A Firefox browser extension that adds a "Copy ID" button to Wise recipient pages for easy copying of recipient IDs.
 
-<img src="assets/demo.png">
+<img src="/assets/demo.png">
 
 ## Installation
 
