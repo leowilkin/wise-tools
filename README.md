@@ -1,6 +1,6 @@
-# Wise Tools
+![Wise Tools Banner](https://github.com/user-attachments/assets/62b5186f-6e07-4016-b7e4-20d431d7fee4)
 
-A collection of tools to modify and enhance Wise (wise.com) for faster use at HCB Operations.
+A collection of tools to modify and enhance [Wise](https://wise.com) for faster use at [HCB Operations](https://hackclub.com/fiscal-sponsorship).
 
 Current tools include:
 
@@ -11,11 +11,11 @@ Current tools include:
 
 ## Installation
 
-The latest version will be published to Mozilla Firefox Addons [here](https://addons.mozilla.org/en-GB/firefox/addon/wise-tools/).
+The latest version will be published to Mozilla Firefox Addons [here](https://addons.mozilla.org/en-GB/firefox/addon/wise-tools/). <-- _psst, it's under review!_
 
-Alternatively, download the binary from Releases, and install via about:addons.
+Alternatively, download the binary from [Releases](https://github.com/leowilkin/wise-tools/releases/latest), and install via [about:debugging](about:debugging#/runtime/this-firefox), unpack the ZIP, and load it as a temporary add-on.
 
-## How to Use
+## Features
 
 ### Copy Recipient ID
 
@@ -42,7 +42,7 @@ Will only run on:
 - `*://wise.com/recipients/*` - To run on Wise recipient pages
 - `*://*.wise.com/recipients/*` - To run on all Wise subdomains
 
-Grabs ID from the Send button next to it which has the ID within it. If it doesn't find it there, it has a sneak around `NEXT_PUBLIC`.
+Grabs ID from the Send button next to it which has the ID within it.
 
 ## Security
 
