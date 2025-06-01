@@ -14,7 +14,7 @@ Current tools include:
 
 The latest version will be published to Mozilla Firefox Addons [here](https://addons.mozilla.org/en-GB/firefox/addon/wise-tools/). <-- _psst, it's under review!_
 
-Alternatively, download the binary from [Releases](https://github.com/leowilkin/wise-tools/releases/latest), and install via [about:debugging](about:debugging#/runtime/this-firefox), unpack the ZIP, and load it as a temporary add-on.
+Alternatively, download a ZIP of the repo [here](https://github.com/leowilkin/wise-tools/archive/refs/heads/main.zip). Unpack the ZIP, and install via [about:debugging](about:debugging#/runtime/this-firefox), via 'load it as a temporary add-on', and choose the `manifest.json` file.
 
 ## Features
 
@@ -39,16 +39,6 @@ Alternatively, download the binary from [Releases](https://github.com/leowilkin/
 ## Contributing
 
 Find something that looks awesome and could be automated via extensions? PR it! I might find a way to do multi-modality for features, so you can toggle your faves and banish the ones that aren't useful. Might happen, might not.
-
-## Technical Deets
-
-Will only run on:
-
-- active tab, AND only on:
-- `*://wise.com/recipients/*` - To run on Wise recipient pages
-- `*://*.wise.com/recipients/*` - To run on all Wise subdomains
-
-Grabs ID from the Send button next to it which has the ID within it.
 
 ## Security
 
