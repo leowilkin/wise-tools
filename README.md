@@ -7,6 +7,7 @@ Current tools include:
 - Copying a Recipient ID from the Recipient page
 - Searching for a recipient by ID from the Recipients page
 - Searching for a transaction on the [HCB](https://github.com/hackclub/hcb) ledger page
+- Quick access to Airtable from the sidebar navigation
 
 <img alt="screenshot of Wise dashboard with copy ID feature" src="/assets/demo.png">
 
@@ -35,6 +36,12 @@ Alternatively, download a ZIP of the repo [here](https://github.com/leowilkin/wi
 
 1. **Open a transaction detail page:** Go to a transaction via [All transactions](https://wise.com/all-transactions)
 2. **Click the `Search on HCB` button:** You will see a new button which allows you to search by exact charged amount on the HCB ledger.
+
+### Airtable Button
+
+1. **Enable the feature:** Toggle on the "Airtable Button" in the extension popup
+2. **Configure the URL:** Enter your Airtable base or view URL in the configuration section
+3. **Access Airtable:** The button will appear in the sidebar navigation for quick access to your configured Airtable
 
 ## Contributing
 

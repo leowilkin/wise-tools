@@ -1,19 +1,24 @@
 (function() {
     'use strict';
-      let config = {
+
+    let config = {
         copyId: true,
         searchById: true,
-        hcbSearch: false
+        hcbSearch: false,
+        airtable: false,
+        airtableUrl: ''
     };
 
     const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
-    
+
     function loadConfiguration() {
         browserAPI.storage.sync.get(['wiseToolsConfig'], function(result) {
             config = result.wiseToolsConfig || {
                 copyId: true,
                 searchById: true,
-                hcbSearch: false
+                hcbSearch: false,
+                airtable: false,
+                airtableUrl: ''
             };
             removeExistingButtons();
             initializeTools();
@@ -26,10 +31,13 @@
         }
     });
 
-    loadConfiguration();    function removeExistingButtons() {
+    loadConfiguration();
+
+    function removeExistingButtons() {
         const existingCopyButton = document.querySelector('.wise-copy-id-btn');
         const existingSearchButton = document.querySelector('.wise-search-by-id-btn');
         const existingHcbButton = document.querySelector('.wise-hcb-search-btn');
+        const existingAirtableButton = document.querySelector('.wise-airtable-btn');
         
         if (existingCopyButton) {
             existingCopyButton.remove();
@@ -39,6 +47,9 @@
         }
         if (existingHcbButton) {
             existingHcbButton.remove();
+        }
+        if (existingAirtableButton) {
+            existingAirtableButton.remove();
         }
     }
 
@@ -69,8 +80,8 @@
                 }
                 if (data.query?.contactId?.[0]) {
                     return data.query.contactId[0];
-                }            } catch (e) {
-                // Silently handle parsing errors
+                }
+            } catch (e) {
             }
         }
 
@@ -109,10 +120,14 @@
             button.textContent = originalText;
             button.style.backgroundColor = '';
         }, 2000);
-    }    function addCopyIdButton() {
+    }
+
+    function addCopyIdButton() {
         if (!config.copyId) {
             return;
-        }        const sendButton = document.querySelector('a[href*="send"][href*="contact="]');
+        }
+
+        const sendButton = document.querySelector('a[href*="send"][href*="contact="]');
         if (!sendButton) {
             return;
         }
@@ -124,7 +139,9 @@
 
         if (buttonContainer.querySelector('.wise-copy-id-btn')) {
             return;
-        }        const contactId = getContactId();
+        }
+
+        const contactId = getContactId();
         if (!contactId) {
             return;
         }
@@ -138,7 +155,9 @@
         copyButton.setAttribute('title', `Copy contact ID: ${contactId}`);
         copyButton.setAttribute('data-extension', 'wise-copy-id');
         copyButton.style.cursor = 'pointer';
-        copyButton.href = '#';        copyButton.addEventListener('click', async function(e) {
+        copyButton.href = '#';
+
+        copyButton.addEventListener('click', async function(e) {
             e.preventDefault();
             const success = await copyToClipboard(contactId);
             showFeedback(copyButton, success);
@@ -146,17 +165,22 @@
 
         const deleteButton = buttonContainer.querySelector('button.btn-negative');
         if (deleteButton) {
-            buttonContainer.insertBefore(copyButton, deleteButton);        } else {
+            buttonContainer.insertBefore(copyButton, deleteButton);
+        } else {
             buttonContainer.appendChild(copyButton);
         }
-    }function addSearchByIdButton() {
+    }
+
+    function addSearchByIdButton() {
         if (!config.searchById) {
             return;
         }
 
         if (!window.location.href.includes('/recipients') || window.location.href.includes('/recipients/')) {
             return;
-        }        const addRecipientButton = document.querySelector('button.Dashboard_addContact__khCen');
+        }
+
+        const addRecipientButton = document.querySelector('button.Dashboard_addContact__khCen');
         if (!addRecipientButton) {
             return;
         }
@@ -199,7 +223,9 @@
 
             const recipientUrl = `https://wise.com/recipients/${recipientId}`;
             window.location.href = recipientUrl;
-        });        addRecipientButton.parentElement.insertBefore(searchByIdButton, addRecipientButton.nextSibling);
+        });
+
+        addRecipientButton.parentElement.insertBefore(searchByIdButton, addRecipientButton.nextSibling);
     }
 
     function getTransactionAmountInCents() {
@@ -208,21 +234,17 @@
             try {
                 const data = JSON.parse(nextDataScript.textContent);
                 
-                // Try multiple paths to find the secondary amount
                 let secondaryAmount = null;
                 
-                // First try the activityData structure
                 if (data.props?.componentInitialProps?.activityData?.activities?.[0]?.secondaryAmount) {
                     secondaryAmount = data.props.componentInitialProps.activityData.activities[0].secondaryAmount;
                 }
                 
-                // Fallback to pageProps structure
                 if (!secondaryAmount && data.props?.pageProps?.activityDetails?.secondaryAmount) {
                     secondaryAmount = data.props.pageProps.activityDetails.secondaryAmount;
                 }
                 
                 if (secondaryAmount && typeof secondaryAmount === 'string') {
-                    // Extract amount from format like "81.41 USD"
                     const match = secondaryAmount.match(/^(\d+\.\d+)\s+USD$/);
                     if (match) {
                         const dollarAmount = parseFloat(match[1]);
@@ -231,7 +253,6 @@
                     }
                 }
             } catch (e) {
-                // Silently handle parsing errors
             }
         }
         return null;
@@ -242,24 +263,21 @@
             return;
         }
 
-        // Check if we're on a transaction details page
         if (!window.location.href.includes('/transactions/activities/by-resource/TRANSFER/')) {
             return;
-        }        // Check if button already exists
+        }
+
         if (document.querySelector('.wise-hcb-search-btn')) {
             return;
         }
 
-        // Try multiple selectors to find the dropdown container
         let categoryDropdownContainer = document.querySelector('.CategoryDropdown_styledCategorySelect__SR5LN');
         
         if (!categoryDropdownContainer) {
-            // Alternative selector: look for any element with CategoryDropdown in class name
             categoryDropdownContainer = document.querySelector('[class*="CategoryDropdown_styledCategorySelect"]');
         }
         
         if (!categoryDropdownContainer) {
-            // Another alternative: look for the fieldset inside the dropdown
             const fieldset = document.querySelector('fieldset.np-input-group');
             if (fieldset && fieldset.parentElement && fieldset.parentElement.className.includes('CategoryDropdown')) {
                 categoryDropdownContainer = fieldset.parentElement;
@@ -267,12 +285,10 @@
         }
         
         if (!categoryDropdownContainer) {
-            // Try looking for the General button text and work backwards
             const generalButton = Array.from(document.querySelectorAll('button')).find(btn => 
                 btn.textContent.includes('General') && btn.getAttribute('role') === 'combobox'
             );
             if (generalButton) {
-                // Look for parent with CategoryDropdown class
                 let parent = generalButton.parentElement;
                 while (parent && !parent.className.includes('CategoryDropdown')) {
                     parent = parent.parentElement;
@@ -281,11 +297,15 @@
                     categoryDropdownContainer = parent;
                 }
             }
-        }        if (!categoryDropdownContainer) {
+        }
+
+        if (!categoryDropdownContainer) {
             return;
         }
 
-        const amountInCents = getTransactionAmountInCents();const hcbButton = document.createElement('button');
+        const amountInCents = getTransactionAmountInCents();
+
+        const hcbButton = document.createElement('button');
         hcbButton.className = 'btn btn-sm np-btn np-btn-sm btn-accent btn-priority-3 p-x-5 m-r-2 wise-hcb-search-btn';
         hcbButton.textContent = 'Search on HCB';
         hcbButton.setAttribute('aria-disabled', 'false');
@@ -302,12 +322,78 @@
                 ? `https://hcb.hackclub.com/admin/ledger?amount=${amountInCents}&mapped_by_human=1&unmapped=0`
                 : 'https://hcb.hackclub.com/admin/ledger';
             window.open(hcbUrl, '_blank');
-        });        // Insert button before the Category dropdown container
+        });
+
         categoryDropdownContainer.parentElement.insertBefore(hcbButton, categoryDropdownContainer);
-    }function initializeTools() {
+    }    function addAirtableButton() {
+        if (!config.airtable || !config.airtableUrl) {
+            return;
+        }
+
+        if (document.querySelector('.wise-airtable-btn')) {
+            return;
+        }
+
+        let sidebarNav = null;
+        
+        const navElements = document.querySelectorAll('nav');
+        for (const nav of navElements) {
+            const navLinks = nav.querySelectorAll('a');
+            const hasMultipleMainNavItems = navLinks.length >= 3 && (
+                nav.querySelector('a[href*="/recipients"]') || 
+                nav.querySelector('a[href*="/transactions"]') ||
+                nav.querySelector('a[href="/"]') || 
+                nav.querySelector('a[href*="/cards"]')
+            );
+            
+            const navRect = nav.getBoundingClientRect();
+            const isLeftSidebar = navRect && navRect.left < window.innerWidth / 3;
+            
+            if (hasMultipleMainNavItems && isLeftSidebar) {
+                sidebarNav = nav;
+                break;
+            }
+        }
+        
+        if (!sidebarNav) {
+            sidebarNav = document.querySelector('.Navigation_container__6qB8j');
+        }
+        
+        if (!sidebarNav) {
+            const possibleSidebars = document.querySelectorAll('[class*="sidebar"], [class*="Navigation"]');
+            for (const sidebar of possibleSidebars) {
+                if (sidebar.querySelector('a[href*="/recipients"]') || sidebar.querySelector('a[href*="/transactions"]')) {
+                    sidebarNav = sidebar;
+                    break;
+                }
+            }
+        }
+
+        if (!sidebarNav) {
+            return;
+        }const airtableButton = document.createElement('a');
+        airtableButton.className = 'wise-airtable-btn';
+        airtableButton.href = config.airtableUrl;
+        airtableButton.target = '_blank';
+        airtableButton.rel = 'noopener noreferrer';
+        airtableButton.innerHTML = '<svg aria-hidden="true" focusable="false" role="none" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 6a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0m2 1h13V5H8zm0 6h13v-2H8zm13 6H8v-2h13zM6 12a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0m-1.5 4.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3" clip-rule="evenodd"></path></svg><span>Airtable</span>';        airtableButton.setAttribute('title', 'Open Airtable');
+        airtableButton.setAttribute('data-extension', 'wise-airtable');
+        airtableButton.style.cursor = 'pointer';
+
+        const navList = sidebarNav.querySelector('ul, .nav-list, [role="list"]');
+        if (navList) {
+            const listItem = document.createElement('li');
+            listItem.appendChild(airtableButton);
+            navList.appendChild(listItem);
+        } else {
+            sidebarNav.appendChild(airtableButton);
+        }
+    }
+
+    function initializeTools() {
         addCopyIdButton();
         addSearchByIdButton();
-        // Add delay for HCB button to ensure page is fully loaded
+        addAirtableButton();
         setTimeout(addHcbSearchButton, 1000);
     }
 
@@ -318,7 +404,9 @@
             });
         } else {
             initializeTools();
-        }        const observer = new MutationObserver(function(mutations) {
+        }
+
+        const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
                     if (config.copyId && 
@@ -334,7 +422,9 @@
                         document.querySelector('button.Dashboard_addContact__khCen') &&
                         !document.querySelector('.wise-search-by-id-btn')) {
                         setTimeout(addSearchByIdButton, 500);
-                    }                    if (config.hcbSearch &&
+                    }
+
+                    if (config.hcbSearch &&
                         window.location.href.includes('/transactions/activities/by-resource/TRANSFER/') && 
                         (document.querySelector('.CategoryDropdown_styledCategorySelect__SR5LN') || 
                          document.querySelector('[class*="CategoryDropdown_styledCategorySelect"]') ||
@@ -343,6 +433,33 @@
                          )) &&
                         !document.querySelector('.wise-hcb-search-btn')) {
                         setTimeout(addHcbSearchButton, 1000);
+                    }                    if (config.airtable && config.airtableUrl) {
+                        // Check for left sidebar navigation more specifically
+                        const navElements = document.querySelectorAll('nav');
+                        let hasMainSidebar = false;
+                        
+                        for (const nav of navElements) {
+                            const navLinks = nav.querySelectorAll('a');
+                            const hasMultipleMainNavItems = navLinks.length >= 3 && (
+                                nav.querySelector('a[href*="/recipients"]') || 
+                                nav.querySelector('a[href*="/transactions"]') ||
+                                nav.querySelector('a[href="/"]') || 
+                                nav.querySelector('a[href*="/cards"]')
+                            );
+                            
+                            const navRect = nav.getBoundingClientRect();
+                            const isLeftSidebar = navRect && navRect.left < window.innerWidth / 3;
+                            
+                            if (hasMultipleMainNavItems && isLeftSidebar) {
+                                hasMainSidebar = true;
+                                break;
+                            }
+                        }
+                        
+                        if ((hasMainSidebar || document.querySelector('.Navigation_container__6qB8j')) &&
+                            !document.querySelector('.wise-airtable-btn')) {
+                            setTimeout(addAirtableButton, 500);
+                        }
                     }
                 }
             });

@@ -1,7 +1,6 @@
 {
-  "manifest_version": 2,
-  "name": "Wise Tools",
-  "version": "1.2.0",
+  "manifest_version": 2,  "name": "Wise Tools",
+  "version": "1.3.0",
   "description": "A collection of tools to modify and enhance Wise (wise.com) for faster use at HCB Operations.",
   "author": "Leo",
   "homepage_url": "https://github.com/leowilkin/wise-tools",
@@ -12,23 +11,17 @@
     "48": "assets/wise.png",
     "128": "assets/wise.png"
   },
-  
-  "permissions": [
+    "permissions": [
     "activeTab",
     "storage",
-    "*://wise.com/recipients*",
-    "*://*.wise.com/recipients*",
-    "*://wise.com/transactions/activities/by-resource/TRANSFER/*",
-    "*://*.wise.com/transactions/activities/by-resource/TRANSFER/*"
+    "*://wise.com/*",
+    "*://*.wise.com/*"
   ],
-
   "content_scripts": [
     {
       "matches": [
-        "*://wise.com/recipients*",
-        "*://*.wise.com/recipients*",
-        "*://wise.com/transactions/activities/by-resource/TRANSFER/*",
-        "*://*.wise.com/transactions/activities/by-resource/TRANSFER/*"
+        "*://wise.com/*",
+        "*://*.wise.com/*"
       ],
       "js": ["content.js"],
       "css": ["styles.css"]
