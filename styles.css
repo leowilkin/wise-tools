@@ -55,3 +55,27 @@
     border-color: #ff8c37 !important;
     border-style: dashed !important;
 }
+
+.wise-hcb-search-btn {
+    background-color: #f9f4de !important;
+    border-color: #ff8c37 !important;
+    border-style: dashed !important;
+    color: black !important;
+    text-decoration: none !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.wise-hcb-search-btn:hover {
+    background-color: #f9f4de !important;
+    border-color: #ff8c37 !important;
+}
+
+.wise-hcb-search-btn:focus {
+    box-shadow: 0 0 0 2px #ff8c37 !important;
+}
+
+.wise-hcb-search-btn:active {
+    background-color: #f9f4de !important;
+    border-color: #ff8c37 !important;
+    border-style: dashed !important;
+}

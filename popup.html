@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wise Tools Extension</title>
+    <title>Wise Tools</title>
     <style>
         body {
             width: 300px;
@@ -19,8 +19,6 @@
             width: 60px;
             height: 60px;
             margin: 0 auto 10px;
-            background: #00b9ff;
-            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -67,9 +65,71 @@
         .instructions ol {
             margin: 10px 0;
             padding-left: 20px;
-        }
-        .instructions li {
+        }        .instructions li {
             margin-bottom: 5px;
+        }
+        .configuration {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .configuration h3 {
+            margin: 0 0 15px 0;
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+        .tool-toggle {
+            margin-bottom: 12px;
+        }
+        .tool-toggle:last-child {
+            margin-bottom: 0;
+        }        .toggle-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .toggle-container input[type="checkbox"] {
+            display: none;
+        }
+        .toggle-slider {
+            width: 40px;
+            height: 20px;
+            background: #ccc;
+            border-radius: 20px;
+            position: relative;
+            transition: background 0.3s ease;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+        .toggle-container input[type="checkbox"]:checked + .toggle-slider {
+            background: #00b9ff;
+        }
+        .toggle-container input[type="checkbox"]:checked + .toggle-slider::before {
+            transform: translateX(20px);
+        }
+        .tool-name {
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+        }
+        .tool-name:hover {
+            color: #00b9ff;
         }
         .footer {
             margin-top: 20px;
@@ -86,20 +146,36 @@
         <img src="/assets/wise.png" alt="Wise logo" class="logo">
         <h1>Wise Tools</h1>
         <div class="version">Version 1.1.0 (Firefox)</div>
+    </div>    <div class="description">
+        This extension adds tooling to Wise, adding extra functionality.
     </div>
 
-    <div class="description">
-        This extension adds a "Copy ID" button to Wise recipient pages, making it easy to copy recipient IDs to your clipboard.
+    <div id="status" class="status">
+        <span id="statusText">Checking page...</span>
     </div>
 
-    <div class="instructions">
-        <strong>How to use:</strong>
-        <ol>
-            <li>Navigate to any recipient page on Wise</li>
-            <li>Look for the orange "Copy ID" button next to Send and Delete</li>
-            <li>Click it to copy the recipient's ID to your clipboard</li>
-            <li>The button will briefly show "Copied!" when successful</li>
-        </ol>
+    <div class="configuration">
+        <h3>Tool Configuration</h3>
+        <div class="tool-toggle" data-tool="copyId">
+            <label class="toggle-container">
+                <input type="checkbox" id="copyIdToggle" checked>
+                <span class="toggle-slider"></span>
+                <span class="tool-name" title="Adds a 'Copy ID' button to recipient details pages that copies the recipient's ID to your clipboard">Copy ID Button</span>
+            </label>
+        </div>        <div class="tool-toggle" data-tool="searchById">
+            <label class="toggle-container">
+                <input type="checkbox" id="searchByIdToggle" checked>
+                <span class="toggle-slider"></span>
+                <span class="tool-name" title="Adds a 'Search by ID' button to the recipients list page that allows you to navigate directly to a recipient using their ID">Search by ID Button</span>
+            </label>
+        </div>
+        <div class="tool-toggle" data-tool="hcbSearch">
+            <label class="toggle-container">
+                <input type="checkbox" id="hcbSearchToggle">
+                <span class="toggle-slider"></span>
+                <span class="tool-name" title="Adds a 'Search on HCB' button to transaction detail pages that opens HCB admin ledger with the transaction amount">Search on HCB Button</span>
+            </label>
+        </div>
     </div>
 
     <div class="footer">

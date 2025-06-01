@@ -12,21 +12,30 @@
     "48": "assets/wise.png",
     "128": "assets/wise.png"
   },
-    "permissions": [
+  
+  "permissions": [
     "activeTab",
+    "storage",
     "*://wise.com/recipients*",
-    "*://*.wise.com/recipients*"
+    "*://*.wise.com/recipients*",
+    "*://wise.com/transactions/activities/by-resource/TRANSFER/*",
+    "*://*.wise.com/transactions/activities/by-resource/TRANSFER/*"
   ],
+
   "content_scripts": [
     {
       "matches": [
         "*://wise.com/recipients*",
-        "*://*.wise.com/recipients*"
+        "*://*.wise.com/recipients*",
+        "*://wise.com/transactions/activities/by-resource/TRANSFER/*",
+        "*://*.wise.com/transactions/activities/by-resource/TRANSFER/*"
       ],
       "js": ["content.js"],
       "css": ["styles.css"]
     }
-  ],"browser_action": {
+  ],
+  
+  "browser_action": {
     "default_popup": "popup.html",
     "default_title": "Wise Tools",
     "default_icon": {
