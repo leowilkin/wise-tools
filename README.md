@@ -6,6 +6,7 @@ Current tools include:
 
 - Copying a Recipient ID from the Recipient page
 - Searching for a recipient by ID from the Recipients page
+- Searching for a transaction on the [HCB](https://github.com/hackclub/hcb) ledger page
 
 <img alt="screenshot of Wise dashboard with copy ID feature" src="/assets/demo.png">
 
@@ -29,6 +30,11 @@ Alternatively, download the binary from [Releases](https://github.com/leowilkin/
 2. **Enter recipient ID:** Type or paste a recipient ID into the search field
 3. **Click Search by ID:** Click the "Search by ID" button next to the "Add recipient" button
 4. **Navigate to recipient:** The page will redirect you directly to that recipient's page
+
+### Search on HCB by Transaction
+
+1. **Open a transaction detail page:** Go to a transaction via [All transactions](https://wise.com/all-transactions)
+2. **Click the `Search on HCB` button:** You will see a new button which allows you to search by exact charged amount on the HCB ledger.
 
 ## Contributing
 
