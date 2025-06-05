@@ -13,9 +13,9 @@ Current tools include:
 
 ## Installation
 
-The latest version will be published to Mozilla Firefox Addons [here](https://addons.mozilla.org/en-GB/firefox/addon/wise-tools/). <-- _psst, it's under review!_
+The latest prod version will be published to Mozilla Firefox Addons [here](https://addons.mozilla.org/en-GB/firefox/addon/wise-tools/).
 
-Alternatively, download a ZIP of the repo [here](https://github.com/leowilkin/wise-tools/archive/refs/heads/main.zip). Unpack the ZIP, and install via [about:debugging](about:debugging#/runtime/this-firefox), via 'load it as a temporary add-on', and choose the `manifest.json` file.
+Alternatively, download a ZIP of the repo [here](https://github.com/leowilkin/wise-tools/archive/refs/heads/main.zip) for the most cutting edge features. Unpack the ZIP, and install via [about:debugging](about:debugging#/runtime/this-firefox), via 'load it as a temporary add-on', and choose the `manifest.json` file.
 
 ## Features
 
